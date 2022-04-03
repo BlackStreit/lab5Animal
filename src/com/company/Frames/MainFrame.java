@@ -11,10 +11,7 @@ public class MainFrame extends JFrame {
     JButton editAnimal;
     JButton deleteAnimal;
     JTable table;
-    //Содержимое таблицы
-    private Object[][] animals ;
-    // Заголовки столбцов
-    private Object[] header ;
+
     public MainFrame(){
         super("Главная страница");
         setSize(1100, 750);
@@ -23,8 +20,10 @@ public class MainFrame extends JFrame {
         initListeners();
     }
     private void init(){
-        animals = DataBase.getAnimal();
-        header = new String[] {"Номер", "Имя", "Тип", "Порода", "Цвет", "Возраст"};
+        //Содержимое таблицы
+        Object[][] animals = DataBase.getAnimal();
+        // Заголовки столбцов
+        Object[] header = new String[]{"Номер", "Имя", "Тип", "Порода", "Цвет", "Возраст"};
         table = new JTable(animals, header);
         Box contents = new Box(BoxLayout.Y_AXIS);
         contents.add(new JScrollPane(table));
@@ -45,12 +44,9 @@ public class MainFrame extends JFrame {
     }
 
     private void initListeners(){
-        addAnimal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new AddFrame();
-                setVisible(false);
-            }
+        addAnimal.addActionListener(e -> {
+            new AddFrame();
+            setVisible(false);
         });
     }
 }

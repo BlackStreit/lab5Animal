@@ -7,8 +7,6 @@ import com.company.DataBase.DataBase;
 
 import javax.swing.*;
 import javax.swing.text.PlainDocument;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AddFrame extends JFrame {
     JComboBox<Types> animalType;
@@ -92,48 +90,42 @@ public class AddFrame extends JFrame {
     }
 
     void initListeners(){
-        add.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                var animal = new Animal();
-                animal.setType((Types)animalType.getSelectedItem());
-                try {
-                    animal.setName(animalName.getText());
-                } catch (Exception ex) {
-                    log.setText("Вы не ввели имя!");
-                    return;
-                }
-                try {
-                    animal.setColour(String.valueOf(animalColor.getSelectedItem()));
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                try {
-                    animal.setBreed(animaBreed.getText());
-                } catch (Exception ex) {
-                    log.setText("Вы не ввели породу!");
-                    return;
-                }
-                try {
-                    animal.setAge(Integer.parseInt(animalAge.getText()));
-                } catch (Exception ex) {
-                    log.setText("Вы не ввели возраст!");
-                    return;
-                }
-                DataBase.addAnimal(animal);
-                animalAge.setText("");
-                animaBreed.setText("");
-                animalName.setText("");
-                log.setText("Запись успешно давлена");
+        add.addActionListener(e -> {
+            var animal = new Animal();
+            animal.setType((Types)animalType.getSelectedItem());
+            try {
+                animal.setName(animalName.getText());
+            } catch (Exception ex) {
+                log.setText("Вы не ввели имя!");
+                return;
             }
+            try {
+                animal.setColour(String.valueOf(animalColor.getSelectedItem()));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            try {
+                animal.setBreed(animaBreed.getText());
+            } catch (Exception ex) {
+                log.setText("Вы не ввели породу!");
+                return;
+            }
+            try {
+                animal.setAge(Integer.parseInt(animalAge.getText()));
+            } catch (Exception ex) {
+                log.setText("Вы не ввели возраст!");
+                return;
+            }
+            DataBase.addAnimal(animal);
+            animalAge.setText("");
+            animaBreed.setText("");
+            animalName.setText("");
+            log.setText("Запись успешно давлена");
         });
 
-        close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                new MainFrame();
-            }
+        close.addActionListener(e -> {
+            setVisible(false);
+            new MainFrame();
         });
     }
 
