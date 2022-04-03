@@ -48,5 +48,13 @@ public class MainFrame extends JFrame {
             new AddFrame();
             setVisible(false);
         });
+        deleteAnimal.addActionListener(e -> {
+            new DeleteFrame();
+            setVisible(false);
+        });
+        editAnimal.addActionListener(e -> {
+            new EditFrame();
+            setVisible(false);
+        });
     }
 }

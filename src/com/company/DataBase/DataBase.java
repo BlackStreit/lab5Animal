@@ -36,7 +36,7 @@ public class DataBase {
                 \ttype text,
                 \tbreed text,
                 \tcolor text,
-                \tage float
+                \tage int
                 );
                 """;
         try {
@@ -78,7 +78,7 @@ public class DataBase {
             while (resultSet.next()){
                 var animal = new Animal();
                 //Чтобы получить конкретное поле, нужно указать его тип данных и название столбца в таблице БД
-                animal.setAge(resultSet.getFloat("age"));
+                animal.setAge(resultSet.getInt("age"));
                 animal.setBreed(resultSet.getString("breed"));
                 animal.setColour(resultSet.getString("color"));
                 animal.setId(resultSet.getInt("id"));
@@ -115,7 +115,7 @@ public class DataBase {
         try {
             var resultSet = statement.executeQuery(sql);
             while (resultSet.next()){
-                animal.setAge(resultSet.getFloat("age"));
+                animal.setAge(resultSet.getInt("age"));
                 animal.setBreed(resultSet.getString("breed"));
                 animal.setColour(resultSet.getString("color"));
                 animal.setId(resultSet.getInt("id"));
@@ -153,7 +153,7 @@ public class DataBase {
     //Изменить данные для конкретного животного
     public static void updateAnimal(Animal animal){
         var sql = "UPDATE Animals SET name = '"+animal.getName()+"', breed = '"+animal.getBreed()+"', type = '"+animal.getType().getType()+"', " +
-                "color = '"+animal.getColour()+"', age = "+animal.getAge()+" WHERE id = "+animal.getId()+";";
+                "color = '"+animal.getColour()+"', age = "+animal.getAge()+" WHERE id = "+animal.getId();
         try {
             statement.executeUpdate(sql);
         } catch (SQLException e) {

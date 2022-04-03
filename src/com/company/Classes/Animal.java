@@ -6,7 +6,7 @@ public class Animal {
     private Types type;
     private String breed;
     private String colour;
-    private float age;
+    private int age;
 
     public int getId() {
         return id;
@@ -18,7 +18,7 @@ public class Animal {
         this.type = Types.Cat;
         this.breed = "breed";
         this.colour = "colour";
-        this.age = 1.0f;
+        this.age = 1;
     }
 
     public void setId(int id) throws Exception {
@@ -62,6 +62,15 @@ public class Animal {
         return colour;
     }
 
+    public Animal(String name, Types type, String breed, String colour, int age) {
+        this.id = 0;
+        this.name = name;
+        this.type = type;
+        this.breed = breed;
+        this.colour = colour;
+        this.age = age;
+    }
+
     public void setColour(String colour) throws Exception {
         if(colour.length()==0){
             throw new Exception("Вы не ввели цвет");
@@ -69,11 +78,11 @@ public class Animal {
         this.colour = colour;
     }
 
-    public float getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(float age) throws Exception {
+    public void setAge(int age) throws Exception {
         if(age <=0){
             throw new Exception("Введите корректный возраст");
         }
