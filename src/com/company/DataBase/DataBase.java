@@ -7,8 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DataBase {
-    //Класс для установки соединения
-    private static Connection connection;
     //Класс для отправки запросов в БД
     private static Statement statement;
 
@@ -16,11 +14,12 @@ public class DataBase {
     public static void createDataBase() {
         try {
             Class.forName("org.sqlite.JDBC"); //Проверяем наличие JDBC драйвера для работы с БД
-            connection = DriverManager.getConnection("jdbc:sqlite:ZooDataBase");//соединениесБД
+            //Класс для установки соединения
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:ZooDataBase");//соединение с БД
             System.out.println("Соединение с СУБД выполнено.");
             statement = connection.createStatement();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace(); // обработка ошибки  Class.forName
+            e.printStackTrace(); // обработка ошибки Class.forName
             System.out.println("JDBC драйвер для СУБД не найден!");
         } catch (SQLException e) {
             e.printStackTrace(); // обработка ошибок  DriverManager.getConnection
@@ -30,14 +29,16 @@ public class DataBase {
     //Создать таблицу в БД
     public static void createTable(){
 
-        var sql = "CREATE TABLE IF NOT EXISTS Animals (\n" +
-                "\tid integer PRIMARY KEY AUTOINCREMENT,\n" +
-                "\tname text,\n" +
-                "\ttype text,\n" +
-                "\tbreed text,\n" +
-                "\tcolor text,\n" +
-                "\tage float\n" +
-                ");\n";
+        var sql = """
+                CREATE TABLE IF NOT EXISTS Animals (
+                \tid integer PRIMARY KEY AUTOINCREMENT,
+                \tname text,
+                \ttype text,
+                \tbreed text,
+                \tcolor text,
+                \tage float
+                );
+                """;
         try {
             statement.executeUpdate(sql);
         } catch (SQLException e) {
@@ -73,33 +74,23 @@ public class DataBase {
         try {
             //Для получения результатов из БД в Java используется ResultSet
             ResultSet resultSet = statement.executeQuery(sql);
-            //До тех пор пока есть что читать
+            //До тех пор, пока есть что читать
             while (resultSet.next()){
                 var animal = new Animal();
-                //Чтобы получить конкрутное поле нужно указать его тип данных и название столбца в таблице БД
+                //Чтобы получить конкретное поле, нужно указать его тип данных и название столбца в таблице БД
                 animal.setAge(resultSet.getFloat("age"));
                 animal.setBreed(resultSet.getString("breed"));
                 animal.setColour(resultSet.getString("color"));
                 animal.setId(resultSet.getInt("id"));
                 animal.setName(resultSet.getString("name"));
                 switch (resultSet.getString("type")){
-                    case "Кошка"->{
-                        animal.setType(Types.Cat);
-                    }
-                    case "Собака"->{
-                        animal.setType(Types.Dog);
-                    }
-                    case "Птица"->{
-                        animal.setType(Types.Bird);
-                    }
-                    case "Лошадь"->{
-                        animal.setType(Types.Horse);
-                    }
+                    case "Кошка"-> animal.setType(Types.Cat);
+                    case "Собака"-> animal.setType(Types.Dog);
+                    case "Птица"-> animal.setType(Types.Bird);
+                    case "Лошадь"-> animal.setType(Types.Horse);
                 }
                 animals.add(animal);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,22 +121,12 @@ public class DataBase {
                 animal.setId(resultSet.getInt("id"));
                 animal.setName(resultSet.getString("name"));
                 switch (resultSet.getString("type")){
-                    case "Кошка"->{
-                        animal.setType(Types.Cat);
-                    }
-                    case "Собака"->{
-                        animal.setType(Types.Dog);
-                    }
-                    case "Птица"->{
-                        animal.setType(Types.Bird);
-                    }
-                    case "Лошадь"->{
-                        animal.setType(Types.Horse);
-                    }
+                    case "Кошка"-> animal.setType(Types.Cat);
+                    case "Собака"-> animal.setType(Types.Dog);
+                    case "Птица"-> animal.setType(Types.Bird);
+                    case "Лошадь"-> animal.setType(Types.Horse);
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

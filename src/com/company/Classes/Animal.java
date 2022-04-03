@@ -21,15 +21,6 @@ public class Animal {
         this.age = 1.0f;
     }
 
-    public Animal(int id, String name, Types type, String breed, String colour, float age) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.breed = breed;
-        this.colour = colour;
-        this.age = age;
-    }
-
     public void setId(int id) throws Exception {
         if(id<0){
             throw  new Exception("ID задано не правильно");
